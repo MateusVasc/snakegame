@@ -13,7 +13,7 @@ public class GamePanel extends JPanel  implements ActionListener {
     static final int screen_width = 600;
     static final int screen_heigth = 600;
     static final int unit_size = 25;
-     
+
     GamePanel() {
 
     }
