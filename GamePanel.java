@@ -10,13 +10,13 @@ import java.util.Random;
 
 public class GamePanel extends JPanel  implements ActionListener {
 
-    static final int screen_width = 600;
-    static final int screen_heigth = 600;
-    static final int unit_size = 25;
-    static final int game_units = (screen_width * screen_heigth)/unit_size;
-    static final int delay = 75;
-    final int x[] = new int[game_units];
-    final int y[] = new int[game_units];
+    static final int SCREEN_WIDTH = 600;
+    static final int SCREEN_HEIGTH = 600;
+    static final int UNIT_SIZE = 25;
+    static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGTH)/ UNIT_SIZE;
+    static final int DELAY = 75;
+    final int x[] = new int[GAME_UNITS];
+    final int y[] = new int[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten;
     int appleX;
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel  implements ActionListener {
 
     GamePanel() {
         random = new Random();
-        this.setPreferredSize(new Dimension(screen_width,screen_heigth));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGTH));
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
@@ -39,7 +39,7 @@ public class GamePanel extends JPanel  implements ActionListener {
     public void startGame() {
         newApple();
         running = true;
-        timer = new Timer(delay,this);
+        timer = new Timer(DELAY,this);
         timer.start();
     }
 
@@ -50,29 +50,29 @@ public class GamePanel extends JPanel  implements ActionListener {
 
     public void draw(Graphics graphics) {
         if (running) {
-            for (int i = 0; i < screen_heigth / unit_size; i++) {
-                graphics.drawLine(i * unit_size, 0, i * unit_size, screen_heigth);
-                graphics.drawLine(0, i * unit_size, screen_width, i * unit_size);
+            for (int i = 0; i < SCREEN_HEIGTH / UNIT_SIZE; i++) {
+                graphics.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGTH);
+                graphics.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
             graphics.setColor(Color.green);
-            graphics.fillOval(appleX, appleY, unit_size, unit_size);
+            graphics.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
                     graphics.setColor(Color.green);
-                    graphics.fillRect(x[i], y[i], unit_size, unit_size);
+                    graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 } else {
                     graphics.setColor(new Color(45, 180, 0));
                     // graphics.setColor(new Color(random.nextInt(255),
                             // random.nextInt(255), random.nextInt(255)));
-                    graphics.fillRect(x[i], y[i], unit_size, unit_size);
+                    graphics.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
             }
             graphics.setColor(Color.red);
             graphics.setFont(new Font("Ink Free", Font.BOLD, 40));
             FontMetrics metrics = getFontMetrics(graphics.getFont());
             graphics.drawString("Score:" + applesEaten,
-                    (screen_width - metrics.stringWidth("Score:" + applesEaten))/2,
+                    (SCREEN_WIDTH - metrics.stringWidth("Score:" + applesEaten))/2,
                     graphics.getFont().getSize());
         } else {
             gameOver(graphics);
@@ -80,8 +80,8 @@ public class GamePanel extends JPanel  implements ActionListener {
     }
 
     public void newApple() {
-        appleX = random.nextInt((int) (screen_width/unit_size)) * unit_size;
-        appleY = random.nextInt((int) (screen_heigth/unit_size)) * unit_size;
+        appleX = random.nextInt((int) (SCREEN_WIDTH / UNIT_SIZE)) * UNIT_SIZE;
+        appleY = random.nextInt((int) (SCREEN_HEIGTH / UNIT_SIZE)) * UNIT_SIZE;
     }
 
     public void move() {
@@ -92,16 +92,16 @@ public class GamePanel extends JPanel  implements ActionListener {
 
         switch (direction) {
             case 'U':
-                y[0] = y[0] - unit_size;
+                y[0] = y[0] - UNIT_SIZE;
                 break;
             case 'D':
-                y[0] = y[0] + unit_size;
+                y[0] = y[0] + UNIT_SIZE;
                 break;
             case 'L':
-                x[0] = x[0] - unit_size;
+                x[0] = x[0] - UNIT_SIZE;
                 break;
             case 'R':
-                x[0] = x[0] + unit_size;
+                x[0] = x[0] + UNIT_SIZE;
                 break;
         }
     }
@@ -126,13 +126,13 @@ public class GamePanel extends JPanel  implements ActionListener {
         if (x[0] < 0) { // left one
             running = false;
         }
-        if (x[0] > screen_width) { // right one
+        if (x[0] > SCREEN_WIDTH) { // right one
             running = false;
         }
         if (y[0] < 0) { // top one
             running = false;
         }
-        if (y[0] > screen_heigth) {
+        if (y[0] > SCREEN_HEIGTH) {
             running = false;
         }
 
@@ -147,14 +147,14 @@ public class GamePanel extends JPanel  implements ActionListener {
         graphics.setFont(new Font("Ink Free", Font.BOLD, 40));
         FontMetrics metrics1 = getFontMetrics(graphics.getFont());
         graphics.drawString("Score:" + applesEaten,
-                (screen_width - metrics1.stringWidth("Score:" + applesEaten))/2,
+                (SCREEN_WIDTH - metrics1.stringWidth("Score:" + applesEaten))/2,
                 graphics.getFont().getSize());
         // Game over text
         graphics.setColor(Color.red);
         graphics.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics2 = getFontMetrics(graphics.getFont());
-        graphics.drawString("Game Over", (screen_width - metrics2.stringWidth("Game Over"))/2,
-                screen_heigth/2);
+        graphics.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2,
+                SCREEN_HEIGTH /2);
     }
 
     @Override
